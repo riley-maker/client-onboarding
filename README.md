@@ -1,4 +1,4 @@
-# Client Onboarding Form - Kelp Copy 
+# Client Onboarding Form - Kelp Copy  
 
 A professional client onboarding form for your email marketing agency.
 
