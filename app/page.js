@@ -69,8 +69,9 @@ export default function OnboardingForm() {
       const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-        },
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
         body: JSON.stringify({
           ...formData,
           _subject: `New Onboarding: ${formData.companyName}`,
