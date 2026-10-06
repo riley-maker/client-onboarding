@@ -192,7 +192,7 @@ export default function OnboardingForm() {
             Thanks for completing the onboarding form. One last step: book your onboarding call so we can walk through the plan together.
           </p>
           <a
-            href="https://calendly.com/riley-thedeadletteragency/30min"
+            href="https://calendly.com/riley-thedeadletteragency/onboarding"
             target="_blank"
             rel="noopener noreferrer"
             style={{
