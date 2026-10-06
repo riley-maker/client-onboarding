@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 
-// ⚠️ REPLACE THIS WITH YOUR FORMSPREE FORM ID
-// Sign up at https://formspree.io and create a form to get your ID
+// Formspree form ID: submissions are emailed and stored in the Formspree dashboard
 const FORMSPREE_ID = 'xjknljjv'
 
 export default function OnboardingForm() {
@@ -15,18 +14,22 @@ export default function OnboardingForm() {
     contactName: '',
     email: '',
     phone: '',
+    approverName: '',
+    approverEmail: '',
     
     // Communication
     preferredChannel: '',
-    slackWorkspace: '',
+    slackInviteEmails: '',
     discordServer: '',
     whatsappNumber: '',
     otherContact: '',
     
     // Access
-    shopifyUrl: '',
+    emailPlatform: '',
+    emailAccessStatus: '',
+    storePlatform: '',
+    storeUrl: '',
     collaboratorCode: '',
-    klaviyoStatus: '',
     replyToEmail: '',
     
     // Brand Identity
@@ -38,6 +41,8 @@ export default function OnboardingForm() {
     visualAssetsAccess: '',
     uniqueSellingPoints: '',
     shippingTimeline: '',
+    founderEmails: '',
+    founderName: '',
     
     // Discount Strategy
     newCustomerDiscount: '',
@@ -48,6 +53,10 @@ export default function OnboardingForm() {
     // Partnership Goals
     successLooksLike: '',
     happyResults: '',
+    goLiveDate: '',
+    goLiveBlockers: '',
+    keyDates: '',
+    noSendDates: '',
     additionalNotes: ''
   })
 
@@ -58,7 +67,12 @@ export default function OnboardingForm() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 5))
+  const nextStep = (e) => {
+    const form = e && e.currentTarget ? e.currentTarget.form : null
+    if (form && !form.reportValidity()) return
+    setCurrentStep(prev => Math.min(prev + 1, 5))
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1))
 
   const handleSubmit = async (e) => {
@@ -81,10 +95,10 @@ export default function OnboardingForm() {
       if (response.ok) {
         setSubmitted(true)
       } else {
-        alert('There was an error submitting the form. Please try again or contact riley@kelpcopy.com directly.')
+        alert('There was an error submitting the form. Please try again or contact riley@thedeadletteragency.com directly.')
       }
     } catch (error) {
-      alert('There was an error submitting the form. Please try again or contact riley@kelpcopy.com directly.')
+      alert('There was an error submitting the form. Please try again or contact riley@thedeadletteragency.com directly.')
     }
 
     setIsSubmitting(false)
@@ -108,7 +122,7 @@ export default function OnboardingForm() {
     marginBottom: '8px',
     fontWeight: '600',
     fontSize: '14px',
-    color: '#2d2926',
+    color: '#111111',
     letterSpacing: '0.02em'
   }
 
@@ -130,7 +144,7 @@ export default function OnboardingForm() {
     gap: '10px',
     padding: '14px 16px',
     background: isSelected ? '#faf8f5' : '#fdfcfb',
-    border: `2px solid ${isSelected ? '#c9a227' : '#e8e4df'}`,
+    border: `2px solid ${isSelected ? '#111111' : '#e8e4df'}`,
     borderRadius: '8px',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
@@ -142,7 +156,7 @@ export default function OnboardingForm() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: 'linear-gradient(165deg, #f8f6f3 0%, #ebe7e1 100%)',
+        background: '#f4f1ea',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -155,12 +169,12 @@ export default function OnboardingForm() {
           padding: '60px',
           maxWidth: '600px',
           textAlign: 'center',
-          boxShadow: '0 25px 80px rgba(45, 41, 38, 0.08)'
+          boxShadow: '0 25px 80px rgba(17, 17, 17, 0.08)'
         }}>
           <div style={{
             width: '80px',
             height: '80px',
-            background: 'linear-gradient(135deg, #2d5a27 0%, #4a7c43 100%)',
+            background: '#111111',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
@@ -171,12 +185,31 @@ export default function OnboardingForm() {
           }}>
             ✓
           </div>
-          <h2 style={{ fontSize: '32px', color: '#2d2926', marginBottom: '16px', fontWeight: '700' }}>
+          <h2 style={{ fontSize: '32px', color: '#111111', marginBottom: '16px', fontWeight: '700' }}>
             You're All Set!
           </h2>
           <p style={{ fontSize: '17px', color: '#6b6560', lineHeight: '1.7' }}>
-            Thanks for completing the onboarding form. I'll review your information and reach out within 24-48 hours to get started.
+            Thanks for completing the onboarding form. One last step: book your onboarding call so we can walk through the plan together.
           </p>
+          <a
+            href="https://calendly.com/riley-thedeadletteragency/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              marginTop: '24px',
+              padding: '16px 36px',
+              background: '#111111',
+              color: '#f4f1ea',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: '700',
+              textDecoration: 'none',
+              letterSpacing: '0.02em'
+            }}
+          >
+            Book Your Onboarding Call →
+          </a>
           <div style={{
             marginTop: '32px',
             padding: '20px',
@@ -184,27 +217,27 @@ export default function OnboardingForm() {
             borderRadius: '12px',
             textAlign: 'left'
           }}>
-            <p style={{ fontSize: '14px', fontWeight: '600', color: '#2d2926', marginBottom: '8px' }}>
+            <p style={{ fontSize: '14px', fontWeight: '600', color: '#111111', marginBottom: '8px' }}>
               ⏳ What happens next:
             </p>
             <ul style={{ fontSize: '14px', color: '#6b6560', margin: 0, paddingLeft: '20px', lineHeight: '1.8' }}>
-              <li>I'll request Klaviyo & Shopify access</li>
-              <li>Review your brand assets</li>
-              <li>Connect via your preferred channel</li>
-              <li>Get started on your email strategy</li>
+              <li>I'll review your answers within 24-48 hours</li>
+              <li>I'll confirm account access and request anything missing</li>
+              <li>You'll get an invite to our shared channel</li>
+              <li>We'll walk through the plan on the onboarding call</li>
             </ul>
           </div>
           <div style={{
             marginTop: '24px',
             padding: '16px',
-            background: '#2d2926',
+            background: '#111111',
             borderRadius: '12px',
             color: '#fff',
             fontSize: '14px'
           }}>
             <p style={{ margin: 0, opacity: 0.8 }}>Questions? Reach me directly:</p>
             <p style={{ margin: '8px 0 0', fontWeight: '600' }}>
-              riley@kelpcopy.com · (661) 210-5536
+              riley@thedeadletteragency.com · (661) 210-5536
             </p>
           </div>
         </div>
@@ -215,14 +248,14 @@ export default function OnboardingForm() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(165deg, #f8f6f3 0%, #ebe7e1 100%)',
+      background: '#f4f1ea',
       fontFamily: 'var(--font-dm-sans), -apple-system, sans-serif',
       padding: '40px 20px'
     }}>
       <style>{`
         input:focus, textarea:focus, select:focus {
-          border-color: #c9a227 !important;
-          box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.1) !important;
+          border-color: #111111 !important;
+          box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.1) !important;
         }
         input::placeholder, textarea::placeholder {
           color: #a9a5a0;
@@ -236,7 +269,7 @@ export default function OnboardingForm() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',
-            background: '#2d2926',
+            background: '#111111',
             color: '#fff',
             padding: '10px 20px',
             borderRadius: '100px',
@@ -246,14 +279,16 @@ export default function OnboardingForm() {
             textTransform: 'uppercase',
             marginBottom: '24px'
           }}>
-            <span style={{ color: '#c9a227' }}>◆</span>
+            <span style={{ color: '#f4f1ea' }}>◆</span>
             Client Onboarding
           </div>
           <h1 style={{
-            fontFamily: 'var(--font-playfair), Georgia, serif',
-            fontSize: '42px',
+            fontFamily: 'var(--font-display), Impact, sans-serif',
+            fontSize: '46px',
             fontWeight: '700',
-            color: '#2d2926',
+            textTransform: 'uppercase',
+            letterSpacing: '0.02em',
+            color: '#111111',
             marginBottom: '16px',
             lineHeight: '1.2'
           }}>
@@ -267,11 +302,11 @@ export default function OnboardingForm() {
         {/* Progress */}
         <div style={{ marginBottom: '40px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-            {['Contact', 'Access', 'Brand', 'Discounts', 'Goals'].map((label, i) => (
+            {['Contact', 'Access', 'Brand', 'Discounts', 'Goals & Timing'].map((label, i) => (
               <div key={i} style={{
                 fontSize: '12px',
                 fontWeight: '600',
-                color: currentStep >= i + 1 ? '#2d2926' : '#b5b0ab',
+                color: currentStep >= i + 1 ? '#111111' : '#b5b0ab',
                 letterSpacing: '0.03em',
                 transition: 'color 0.3s ease'
               }}>
@@ -288,7 +323,7 @@ export default function OnboardingForm() {
             <div style={{
               height: '100%',
               width: `${(currentStep / 5) * 100}%`,
-              background: 'linear-gradient(90deg, #c9a227 0%, #dbb842 100%)',
+              background: '#111111',
               borderRadius: '100px',
               transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
             }} />
@@ -301,14 +336,14 @@ export default function OnboardingForm() {
             background: '#fff',
             borderRadius: '24px',
             padding: '48px',
-            boxShadow: '0 25px 80px rgba(45, 41, 38, 0.08)',
+            boxShadow: '0 25px 80px rgba(17, 17, 17, 0.08)',
             marginBottom: '24px'
           }}>
             
             {/* Step 1: Contact & Communication */}
             {currentStep === 1 && (
               <div>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#2d2926', marginBottom: '8px' }}>
+                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#111111', marginBottom: '8px' }}>
                   Contact & Communication
                 </h2>
                 <p style={{ color: '#6b6560', marginBottom: '32px', fontSize: '15px' }}>
@@ -375,11 +410,52 @@ export default function OnboardingForm() {
                   padding: '24px',
                   marginBottom: '24px'
                 }}>
-                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#2d2926', marginBottom: '16px' }}>
+                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111111', marginBottom: '6px' }}>
+                    Who approves emails before they go out? *
+                  </h3>
+                  <p style={{ ...hintStyle, marginTop: 0, marginBottom: '16px' }}>
+                    One person with the final say keeps things moving. I'll send work to them for review.
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div style={{ marginBottom: 0 }}>
+                      <label style={labelStyle}>Approver Name *</label>
+                      <input
+                        type="text"
+                        name="approverName"
+                        value={formData.approverName}
+                        onChange={handleChange}
+                        placeholder="Jane Smith"
+                        style={inputStyle}
+                        required
+                      />
+                    </div>
+                    <div style={{ marginBottom: 0 }}>
+                      <label style={labelStyle}>Approver Email *</label>
+                      <input
+                        type="email"
+                        name="approverEmail"
+                        value={formData.approverEmail}
+                        onChange={handleChange}
+                        placeholder="jane@yourbrand.com"
+                        style={inputStyle}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{
+                  background: '#faf8f5',
+                  border: '2px solid #e8e4df',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  marginBottom: '24px'
+                }}>
+                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111111', marginBottom: '16px' }}>
                     💬 Preferred Communication Channel *
                   </h3>
                   <p style={{ ...hintStyle, marginBottom: '16px' }}>
-                    How would you like us to stay in touch? Please add me to your workspace or provide your contact details.
+                    How would you like us to stay in touch? Slack is my default: I'll set up a shared channel and invite your team.
                   </p>
                   
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
@@ -391,7 +467,8 @@ export default function OnboardingForm() {
                           value={channel.toLowerCase()}
                           checked={formData.preferredChannel === channel.toLowerCase()}
                           onChange={handleChange}
-                          style={{ accentColor: '#c9a227' }}
+                          style={{ accentColor: '#111111' }}
+                          required
                         />
                         {channel}
                       </label>
@@ -400,14 +477,14 @@ export default function OnboardingForm() {
 
                   {formData.preferredChannel === 'slack' && (
                     <div style={fieldGroup}>
-                      <label style={labelStyle}>Slack Workspace</label>
-                      <p style={hintStyle}>Please invite me to your Slack workspace, or share the workspace name/invite link.</p>
+                      <label style={labelStyle}>Who should I invite to our Slack channel?</label>
+                      <p style={hintStyle}>I'll create a shared channel for us. List the email address of everyone who should be in it.</p>
                       <input
                         type="text"
-                        name="slackWorkspace"
-                        value={formData.slackWorkspace}
+                        name="slackInviteEmails"
+                        value={formData.slackInviteEmails}
                         onChange={handleChange}
-                        placeholder="workspace-name.slack.com or invite link"
+                        placeholder="jane@yourbrand.com, sam@yourbrand.com"
                         style={inputStyle}
                       />
                     </div>
@@ -416,7 +493,7 @@ export default function OnboardingForm() {
                   {formData.preferredChannel === 'discord' && (
                     <div style={fieldGroup}>
                       <label style={labelStyle}>Discord Server</label>
-                      <p style={hintStyle}>Please share your Discord server invite link, or add me: @rileykelp</p>
+                      <p style={hintStyle}>Please share your Discord server invite link.</p>
                       <input
                         type="text"
                         name="discordServer"
@@ -490,14 +567,14 @@ export default function OnboardingForm() {
                 </div>
 
                 <div style={{
-                  background: '#2d2926',
+                  background: '#111111',
                   borderRadius: '12px',
                   padding: '20px',
                   color: '#fff'
                 }}>
                   <p style={{ fontSize: '14px', margin: 0, opacity: 0.8 }}>
-                    <strong style={{ color: '#c9a227' }}>My contact info:</strong><br/>
-                    📧 riley@kelpcopy.com<br/>
+                    <strong style={{ color: '#f4f1ea' }}>My contact info:</strong><br/>
+                    📧 riley@thedeadletteragency.com<br/>
                     📱 (661) 210-5536
                   </p>
                 </div>
@@ -507,11 +584,11 @@ export default function OnboardingForm() {
             {/* Step 2: Access */}
             {currentStep === 2 && (
               <div>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#2d2926', marginBottom: '8px' }}>
+                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#111111', marginBottom: '8px' }}>
                   Account Access
                 </h2>
                 <p style={{ color: '#6b6560', marginBottom: '32px', fontSize: '15px' }}>
-                  I need access to your accounts to get started.
+                  I need top-level access to your email platform and your store to get started.
                 </p>
 
                 <div style={{
@@ -521,28 +598,42 @@ export default function OnboardingForm() {
                   padding: '24px',
                   marginBottom: '28px'
                 }}>
-                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#2d2926', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '20px' }}>📧</span> Klaviyo Access
+                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111111', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '20px' }}>📧</span> Email Platform Access
                   </h3>
                   <p style={{ fontSize: '14px', color: '#6b6560', marginBottom: '16px', lineHeight: '1.6' }}>
-                    I need <strong>"Manager"</strong> access to your Klaviyo account.<br/>
-                    Go to: Settings → Account → Users → Add User (riley@kelpcopy.com)
+                    Please add <strong>riley@thedeadletteragency.com</strong> to your email platform (Klaviyo, or whatever you send with) at the highest access level it offers.<br/>
+                    In Klaviyo: Settings → Account → Users → Add User, with the <strong>"Manager"</strong> role.
                   </p>
-                  <div style={fieldGroup}>
-                    <label style={labelStyle}>Klaviyo Access Status *</label>
-                    <select
-                      name="klaviyoStatus"
-                      value={formData.klaviyoStatus}
-                      onChange={handleChange}
-                      style={inputStyle}
-                      required
-                    >
-                      <option value="">Select status...</option>
-                      <option value="added-manager">✓ Added as Manager</option>
-                      <option value="need-upgrade">Already added, but need to upgrade to Manager</option>
-                      <option value="will-add">Will add after submitting this form</option>
-                      <option value="need-help">Need help with this</option>
-                    </select>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div style={{ marginBottom: 0 }}>
+                      <label style={labelStyle}>Which email platform? *</label>
+                      <input
+                        type="text"
+                        name="emailPlatform"
+                        value={formData.emailPlatform}
+                        onChange={handleChange}
+                        placeholder="Klaviyo"
+                        style={inputStyle}
+                        required
+                      />
+                    </div>
+                    <div style={{ marginBottom: 0 }}>
+                      <label style={labelStyle}>Access Status *</label>
+                      <select
+                        name="emailAccessStatus"
+                        value={formData.emailAccessStatus}
+                        onChange={handleChange}
+                        style={inputStyle}
+                        required
+                      >
+                        <option value="">Select status...</option>
+                        <option value="added-full-access">✓ Added with full access</option>
+                        <option value="need-upgrade">Already added, but access needs upgrading</option>
+                        <option value="will-add">Will add after submitting this form</option>
+                        <option value="need-help">Need help with this</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -553,39 +644,51 @@ export default function OnboardingForm() {
                   padding: '24px',
                   marginBottom: '28px'
                 }}>
-                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#2d2926', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '20px' }}>🛒</span> Shopify Access
+                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111111', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '20px' }}>🛒</span> Store Access
                   </h3>
                   <p style={{ fontSize: '14px', color: '#6b6560', marginBottom: '16px', lineHeight: '1.6' }}>
-                    Please share your <strong>4-digit collaborator code</strong> and store URL so I can request access.<br/>
-                    Find it: Settings → Users and permissions → Collaborators
+                    I need top-level access to your store (Shopify, or whatever your store runs on).<br/>
+                    On Shopify: share your <strong>4-digit collaborator code</strong> below and I'll send the request. Find it under Settings → Users and permissions → Collaborators.<br/>
+                    On anything else: please add <strong>riley@thedeadletteragency.com</strong> as an admin user.
                   </p>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     <div style={fieldGroup}>
-                      <label style={labelStyle}>Shopify Store URL *</label>
+                      <label style={labelStyle}>Which store platform? *</label>
                       <input
                         type="text"
-                        name="shopifyUrl"
-                        value={formData.shopifyUrl}
+                        name="storePlatform"
+                        value={formData.storePlatform}
+                        onChange={handleChange}
+                        placeholder="Shopify"
+                        style={inputStyle}
+                        required
+                      />
+                    </div>
+                    <div style={fieldGroup}>
+                      <label style={labelStyle}>Store URL *</label>
+                      <input
+                        type="text"
+                        name="storeUrl"
+                        value={formData.storeUrl}
                         onChange={handleChange}
                         placeholder="yourstore.myshopify.com"
                         style={inputStyle}
                         required
                       />
                     </div>
-                    <div style={fieldGroup}>
-                      <label style={labelStyle}>4-Digit Collaborator Code *</label>
-                      <input
-                        type="text"
-                        name="collaboratorCode"
-                        value={formData.collaboratorCode}
-                        onChange={handleChange}
-                        placeholder="1234"
-                        maxLength={4}
-                        style={{ ...inputStyle, letterSpacing: '0.3em', textAlign: 'center', fontWeight: '600' }}
-                        required
-                      />
-                    </div>
+                  </div>
+                  <div style={{ marginBottom: 0, maxWidth: '260px' }}>
+                    <label style={labelStyle}>Collaborator Code (Shopify only)</label>
+                    <input
+                      type="text"
+                      name="collaboratorCode"
+                      value={formData.collaboratorCode}
+                      onChange={handleChange}
+                      placeholder="1234"
+                      maxLength={4}
+                      style={{ ...inputStyle, letterSpacing: '0.3em', textAlign: 'center', fontWeight: '600' }}
+                    />
                   </div>
                 </div>
 
@@ -610,7 +713,7 @@ export default function OnboardingForm() {
             {/* Step 3: Brand */}
             {currentStep === 3 && (
               <div>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#2d2926', marginBottom: '8px' }}>
+                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#111111', marginBottom: '8px' }}>
                   Brand Identity
                 </h2>
                 <p style={{ color: '#6b6560', marginBottom: '32px', fontSize: '15px' }}>
@@ -677,7 +780,7 @@ export default function OnboardingForm() {
                           value={option.toLowerCase().replace(/[^a-z]/g, '-')}
                           checked={formData.brandGuideType === option.toLowerCase().replace(/[^a-z]/g, '-')}
                           onChange={handleChange}
-                          style={{ accentColor: '#c9a227' }}
+                          style={{ accentColor: '#111111' }}
                         />
                         {option}
                       </label>
@@ -698,7 +801,7 @@ export default function OnboardingForm() {
                   {formData.brandGuideType === 'give-me-access' && (
                     <div>
                       <p style={{ fontSize: '14px', color: '#6b6560', marginBottom: '8px' }}>
-                        Please share access to your brand guide folder with: <strong>riley@kelpcopy.com</strong>
+                        Please share access to your brand guide folder with: <strong>riley@thedeadletteragency.com</strong>
                       </p>
                       <input
                         type="text"
@@ -740,7 +843,7 @@ export default function OnboardingForm() {
                           value={option.toLowerCase().replace(/[^a-z]/g, '-')}
                           checked={formData.visualAssetsType === option.toLowerCase().replace(/[^a-z]/g, '-')}
                           onChange={handleChange}
-                          style={{ accentColor: '#c9a227' }}
+                          style={{ accentColor: '#111111' }}
                         />
                         {option}
                       </label>
@@ -761,7 +864,7 @@ export default function OnboardingForm() {
                   {formData.visualAssetsType === 'give-me-access' && (
                     <div>
                       <p style={{ fontSize: '14px', color: '#6b6560', marginBottom: '8px' }}>
-                        Please share access with: <strong>riley@kelpcopy.com</strong>
+                        Please share access with: <strong>riley@thedeadletteragency.com</strong>
                       </p>
                       <input
                         type="text"
@@ -790,13 +893,62 @@ export default function OnboardingForm() {
                     required
                   />
                 </div>
+
+                <div style={{
+                  background: '#faf8f5',
+                  border: '2px solid #e8e4df',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  marginBottom: '0'
+                }}>
+                  <label style={labelStyle}>Emails From a Real Person *</label>
+                  <p style={hintStyle}>
+                    Some emails work best as a plain-text note from a founder or team member instead of a designed email from the brand. Are you OK with that?
+                  </p>
+                  <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                    {[
+                      ['yes', 'Yes'],
+                      ['yes-review-first', 'Yes, but I want to read each one first'],
+                      ['no', 'No, keep it from the brand']
+                    ].map(([value, text]) => (
+                      <label key={value} style={{
+                        ...radioOptionStyle(formData.founderEmails === value),
+                        flex: '1 1 auto',
+                        minWidth: '140px',
+                        justifyContent: 'center',
+                        fontSize: '13px'
+                      }}>
+                        <input
+                          type="radio"
+                          name="founderEmails"
+                          value={value}
+                          checked={formData.founderEmails === value}
+                          onChange={handleChange}
+                          style={{ accentColor: '#111111' }}
+                          required
+                        />
+                        {text}
+                      </label>
+                    ))}
+                  </div>
+                  {(formData.founderEmails === 'yes' || formData.founderEmails === 'yes-review-first') && (
+                    <input
+                      type="text"
+                      name="founderName"
+                      value={formData.founderName}
+                      onChange={handleChange}
+                      placeholder="Whose name should they come from? (name and role)"
+                      style={inputStyle}
+                    />
+                  )}
+                </div>
               </div>
             )}
 
             {/* Step 4: Discount Strategy */}
             {currentStep === 4 && (
               <div>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#2d2926', marginBottom: '8px' }}>
+                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#111111', marginBottom: '8px' }}>
                   Discount Strategy
                 </h2>
                 <p style={{ color: '#6b6560', marginBottom: '32px', fontSize: '15px' }}>
@@ -804,13 +956,13 @@ export default function OnboardingForm() {
                 </p>
 
                 <div style={{
-                  background: 'linear-gradient(135deg, #2d2926 0%, #3d3936 100%)',
+                  background: '#111111',
                   borderRadius: '12px',
                   padding: '24px',
                   marginBottom: '28px',
                   color: '#fff'
                 }}>
-                  <h3 style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', color: '#c9a227' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', color: '#f4f1ea' }}>
                     💡 Why This Matters
                   </h3>
                   <p style={{ fontSize: '14px', lineHeight: '1.6', opacity: 0.9 }}>
@@ -886,7 +1038,7 @@ export default function OnboardingForm() {
                 <div style={fieldGroup}>
                   <label style={labelStyle}>Abandoned Cart Discount *</label>
                   <p style={hintStyle}>
-                    What % discount to recover customers who abandoned their cart? (Ideally slightly higher than new customer offer)
+                    What % discount are you comfortable using to recover abandoned carts? (Most brands match their new customer offer)
                   </p>
                   <select
                     name="abandonedCartDiscount"
@@ -916,7 +1068,7 @@ export default function OnboardingForm() {
                   color: '#6b6560',
                   lineHeight: '1.6'
                 }}>
-                  <strong style={{ color: '#2d2926' }}>📊 Best Practice:</strong> New Customer 10-15% → Abandoned Cart 15-20% → Winback 20-25%. This escalates urgency without devaluing your brand.
+                  <strong style={{ color: '#111111' }}>📊 How I use these:</strong> Your new customer offer is delivered in the first welcome email. Abandoned cart and checkout emails lead with reminders, and an offer only appears from the third email, so you're not discounting orders that would have come in anyway.
                 </div>
               </div>
             )}
@@ -924,11 +1076,11 @@ export default function OnboardingForm() {
             {/* Step 5: Partnership Goals */}
             {currentStep === 5 && (
               <div>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#2d2926', marginBottom: '8px' }}>
-                  Partnership Goals
+                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#111111', marginBottom: '8px' }}>
+                  Goals & Timing
                 </h2>
                 <p style={{ color: '#6b6560', marginBottom: '32px', fontSize: '15px' }}>
-                  Help me understand what success looks like for you.
+                  Help me understand what success looks like for you, and when we start.
                 </p>
 
                 <div style={fieldGroup}>
@@ -964,27 +1116,80 @@ export default function OnboardingForm() {
                 </div>
 
                 <div style={fieldGroup}>
+                  <label style={labelStyle}>When can we go live? *</label>
+                  <p style={hintStyle}>
+                    The earliest date I can start sending from your account, and anything standing in the way (another agency finishing up, a platform move, a launch).
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px' }}>
+                    <input
+                      type="text"
+                      name="goLiveDate"
+                      value={formData.goLiveDate}
+                      onChange={handleChange}
+                      placeholder="e.g., ASAP or Nov 1"
+                      style={inputStyle}
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="goLiveBlockers"
+                      value={formData.goLiveBlockers}
+                      onChange={handleChange}
+                      placeholder="Anything in the way? (optional)"
+                      style={inputStyle}
+                    />
+                  </div>
+                </div>
+
+                <div style={fieldGroup}>
+                  <label style={labelStyle}>Key Dates in the Next 90 Days</label>
+                  <p style={hintStyle}>
+                    Launches, restocks, sales and events I should plan around.
+                  </p>
+                  <textarea
+                    name="keyDates"
+                    value={formData.keyDates}
+                    onChange={handleChange}
+                    placeholder="e.g., New product drops Nov 12, Black Friday sale Nov 27-30, restock mid-December..."
+                    rows={3}
+                    style={{ ...inputStyle, resize: 'vertical' }}
+                  />
+                </div>
+
+                <div style={fieldGroup}>
+                  <label style={labelStyle}>Dates We Should Not Send</label>
+                  <input
+                    type="text"
+                    name="noSendDates"
+                    value={formData.noSendDates}
+                    onChange={handleChange}
+                    placeholder="e.g., Dec 24-25, company closure the first week of January"
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div style={fieldGroup}>
                   <label style={labelStyle}>Anything Else I Should Know?</label>
                   <textarea
                     name="additionalNotes"
                     value={formData.additionalNotes}
                     onChange={handleChange}
-                    placeholder="Upcoming launches, sales events, concerns, preferences, questions..."
+                    placeholder="Concerns, preferences, questions..."
                     rows={4}
                     style={{ ...inputStyle, resize: 'vertical' }}
                   />
                 </div>
 
                 <div style={{
-                  background: 'linear-gradient(135deg, #f0f7ee 0%, #e8f3e5 100%)',
-                  border: '2px solid #c5dfc0',
+                  background: '#faf8f5',
+                  border: '2px solid #111111',
                   borderRadius: '12px',
                   padding: '20px',
                   fontSize: '14px',
-                  color: '#3d6b35',
+                  color: '#111111',
                   lineHeight: '1.6'
                 }}>
-                  <strong>✅ Almost done!</strong> Once you submit, I'll review everything and we'll get started right away.
+                  <strong>✅ Almost done!</strong> Once you submit, you'll be able to book your onboarding call on the next screen.
                 </div>
               </div>
             )}
@@ -1026,13 +1231,13 @@ export default function OnboardingForm() {
                   fontSize: '15px',
                   fontWeight: '600',
                   color: '#fff',
-                  background: 'linear-gradient(135deg, #2d2926 0%, #4a4541 100%)',
+                  background: '#111111',
                   border: 'none',
                   borderRadius: '12px',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   fontFamily: 'inherit',
-                  boxShadow: '0 4px 14px rgba(45, 41, 38, 0.25)'
+                  boxShadow: '0 4px 14px rgba(17, 17, 17, 0.25)'
                 }}
               >
                 Continue →
@@ -1045,16 +1250,16 @@ export default function OnboardingForm() {
                   padding: '16px 40px',
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: '#2d2926',
+                  color: isSubmitting ? '#6b6560' : '#f4f1ea',
                   background: isSubmitting 
                     ? '#e8e4df' 
-                    : 'linear-gradient(135deg, #c9a227 0%, #dbb842 100%)',
+                    : '#111111',
                   border: 'none',
                   borderRadius: '12px',
                   cursor: isSubmitting ? 'not-allowed' : 'pointer',
                   transition: 'all 0.2s ease',
                   fontFamily: 'inherit',
-                  boxShadow: isSubmitting ? 'none' : '0 4px 20px rgba(201, 162, 39, 0.35)'
+                  boxShadow: isSubmitting ? 'none' : '0 4px 20px rgba(17, 17, 17, 0.35)'
                 }}
               >
                 {isSubmitting ? 'Submitting...' : 'Submit Onboarding ✓'}
@@ -1070,7 +1275,9 @@ export default function OnboardingForm() {
           fontSize: '13px',
           color: '#8a8580'
         }}>
-          Questions? Reach me at riley@kelpcopy.com or (661) 210-5536
+          Questions? Reach me at riley@thedeadletteragency.com or (661) 210-5536
+          <br />
+          <span style={{ letterSpacing: '0.18em', textTransform: 'uppercase', fontSize: '11px', display: 'inline-block', marginTop: '10px' }}>Dead Letter</span>
         </p>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { DM_Sans, Playfair_Display } from 'next/font/google'
+import { DM_Sans, Oswald } from 'next/font/google'
 
 const dmSans = DM_Sans({ 
   subsets: ['latin'],
@@ -6,20 +6,21 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-const playfair = Playfair_Display({ 
+const display = Oswald({ 
   subsets: ['latin'],
-  variable: '--font-playfair',
+  weight: ['600', '700'],
+  variable: '--font-display',
   display: 'swap',
 })
 
 export const metadata = {
-  title: 'Client Onboarding | Kelp Copy',
-  description: 'Complete your onboarding to get started with email marketing',
+  title: 'Client Onboarding | Dead Letter',
+  description: 'Complete your onboarding to get started',
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${display.variable}`}>
       <body style={{ margin: 0, padding: 0 }}>{children}</body>
     </html>
   )
